@@ -4,12 +4,17 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { TabsPage } from '../pages/tabs/tabs';
+import { ViewChild } from '@angular/core';
+import { Nav } from 'ionic-angular';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
+  @ViewChild(Nav) navCtrl: Nav;
+  
   rootPage:any = TabsPage;
+  pages: Array<{title: string, component: any, index: string, icon_name: string}>;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
@@ -18,5 +23,15 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
     });
+
+    this.pages = [
+      { title: 'Публикации', component: TabsPage, index: '0', icon_name: 'ios-paper-outline' },
+      { title: 'Категории', component: TabsPage, index: '1', icon_name: 'ios-albums-outline' },
+      { title: 'Авторы', component: TabsPage, index: '2', icon_name: 'ios-contacts-outline' }
+    ];
+  }
+
+  openPage(page) {
+    this.navCtrl.setRoot(page.component, {index: page.index});
   }
 }
