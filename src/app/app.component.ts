@@ -27,11 +27,12 @@ export class MyApp {
     this.pages = [
       { title: 'Публикации', component: TabsPage, index: '0', icon_name: 'ios-paper-outline' },
       { title: 'Категории', component: TabsPage, index: '1', icon_name: 'ios-albums-outline' },
-      { title: 'Авторы', component: TabsPage, index: '2', icon_name: 'ios-contacts-outline' }
+      { title: 'Авторы', component: TabsPage, index: '2', icon_name: 'ios-contacts-outline' },
+      { title: 'Settings', component: TabsPage, index: '3', icon_name: 'md-settings' }
     ];
   }
 
   openPage(page) {
-    this.navCtrl.setRoot(page.component, {index: page.index});
+    this.navCtrl.push(page.component, {index: page.index});
   }
 }

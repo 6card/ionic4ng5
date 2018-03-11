@@ -1,16 +1,13 @@
-<ion-menu [content]="content">
-    <ion-header>
-      
-    </ion-header>
-    
-    <ion-content class="myBg">
-      <ion-list no-lines>
-        <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)" color="primary">
-          <ion-icon item-left [name]="p.icon_name" item-left color="light"></ion-icon>
-          {{p.title}}
-        </button>
-      </ion-list>
-    </ion-content>
+<ion-menu [content]="content">    
+  <ion-content class="myBg">
+    <img src="assets/imgs/menu.png" />
+    <ion-list no-lines>
+      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)" color="primary">
+        <ion-icon item-left [name]="p.icon_name" item-left color="light"></ion-icon>
+        {{p.title}}
+      </button>
+    </ion-list>
+  </ion-content>
   
 </ion-menu>
 
