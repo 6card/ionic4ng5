@@ -18,6 +18,7 @@ import { Toast } from '@ionic-native/toast';
 import { BarcodeProvider } from '../providers/barcode/barcode';
 import { HttpClientModule } from '@angular/common/http';
 import { AppPreferences } from '@ionic-native/app-preferences';
+import { AppVersion } from '@ionic-native/app-version';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { AppPreferences } from '@ionic-native/app-preferences';
     BarcodeScanner,
     Toast,
     BarcodeProvider,
-    AppPreferences
+    AppPreferences,
+    AppVersion
   ]
 })
 export class AppModule {}
