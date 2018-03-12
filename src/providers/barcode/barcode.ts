@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import 'rxjs/add/operator/catch';
@@ -23,7 +23,14 @@ export class BarcodeProvider {
   getNames(barcode: any): Observable<any> {
     const apiURL = `${this.apiRoot}/${barcode}/B089134387468054496171910524556`;
 
-    return this.http.get(apiURL)
+    /*
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': "*"
+      })
+    };
+    */
+    return this.http.get(apiURL/*, httpOptions*/)
     .catch(res => {
         // Handle it here, on status code code
         if (res.status === 404) {
