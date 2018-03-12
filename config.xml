@@ -84,5 +84,4 @@
     <plugin name="phonegap-plugin-barcodescanner" spec="^7.0.2" />
     <plugin name="cordova-plugin-x-toast" spec="^2.6.0" />
     <plugin name="cordova-plugin-app-preferences" spec="~0.99.3" />
-    <engine name="android" spec="~5.2.2" />
 </widget>
