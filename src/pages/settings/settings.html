@@ -1,8 +1,10 @@
 <ion-header>
 
-  <ion-navbar color="primary">
-      
+  <ion-navbar color="primary">      
     <ion-title>Settings</ion-title>
+    <ion-buttons end>
+      <ion-spinner *ngIf="loading"></ion-spinner>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -10,6 +12,13 @@
 
 <ion-content padding>
     <ion-list>
+      <ion-list-header>
+        Main settings
+      </ion-list-header>
+      <ion-item>
+        <ion-label stacked>Title</ion-label>
+        <ion-input type="text" [(ngModel)]="title" clearInput="true"></ion-input>
+      </ion-item>
       <ion-item>
           Herbology
         <ion-icon name="rose" item-end></ion-icon>
@@ -20,6 +29,20 @@
             Beep after scan
           </ion-label>
       </ion-item>
-      </ion-list>
+    </ion-list>
+
+    <ion-list>
+        <ion-list-header>
+          Other settings
+        </ion-list-header>
+    
+        <ion-item>
+          Application
+          <ion-note item-end>{{ version }}</ion-note>
+        </ion-item>
+    
+    </ion-list>
+
+  <button ion-button block (click)="save()" [disabled]="loading">Save</button>
 
 </ion-content>
