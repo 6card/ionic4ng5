@@ -1,4 +1,5 @@
 sudo npm install -g cordova@6
+
 cordova platform add android@6
 
 change "platforms/android/phonegap-plugin-barcodescanner/starter-barcodescanner.gradle"
