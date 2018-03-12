@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { AppPreferences } from '@ionic-native/app-preferences';
+import { Platform } from 'ionic-angular';
 
 
 @IonicPage()
@@ -16,12 +17,15 @@ export class SettingsPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    private appPreferences: AppPreferences
+    private appPreferences: AppPreferences,
+    private platform: Platform
   ) {
-    this.appPreferences.fetch('beep').then((res) => {
-       this.beep = res;
-       console.log(res);
-    });
+      if (this.platform.is('cordova')) {
+        this.appPreferences.fetch('beep').then((res) => {
+          this.beep = res;
+          console.log(res);
+      });
+    }    
   }
 
   updateBeep(beep) {
