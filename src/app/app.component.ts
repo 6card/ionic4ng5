@@ -7,6 +7,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { ViewChild } from '@angular/core';
 import { Nav } from 'ionic-angular';
 
+import { SettingsPage } from '../pages/settings/settings';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -28,7 +30,7 @@ export class MyApp {
       { title: 'Публикации', component: TabsPage, index: '0', icon_name: 'ios-paper-outline' },
       { title: 'Категории', component: TabsPage, index: '1', icon_name: 'ios-albums-outline' },
       { title: 'Авторы', component: TabsPage, index: '2', icon_name: 'ios-contacts-outline' },
-      { title: 'Settings', component: TabsPage, index: '3', icon_name: 'md-settings' }
+      { title: 'Settings', component: SettingsPage, index: '3', icon_name: 'md-settings' }
     ];
   }
 
