@@ -1,0 +1,23 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Choose name</ion-title>
+    <ion-buttons end>
+        <button ion-button (click)="dismiss()">Cancel</button>
+    </ion-buttons>
+
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-list style="margin-top: 8px;">
+
+        <ion-item text-wrap *ngFor="let n of names">
+            <a class="custom-list" (click)="dismiss(n)">{{n}}</a>
+        </ion-item>
+      </ion-list>
+
+</ion-content>

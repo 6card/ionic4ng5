@@ -10,6 +10,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { ShopslistPage } from '../pages/shopslist/shopslist';
 import { SettingsPage } from '../pages/settings/settings';
+import { NamesListPage } from '../pages/names-list/names-list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -28,7 +29,8 @@ import { AppVersion } from '@ionic-native/app-version';
     HomePage,
     TabsPage,
     ShopslistPage,
-    SettingsPage
+    SettingsPage,
+    NamesListPage
   ],
   imports: [
     BrowserModule,
@@ -43,7 +45,8 @@ import { AppVersion } from '@ionic-native/app-version';
     HomePage,
     TabsPage,
     ShopslistPage,
-    SettingsPage
+    SettingsPage,
+    NamesListPage
   ],
   providers: [
     StatusBar,
