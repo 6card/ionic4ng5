@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, ModalController, Platform } from 'ionic-angular';
+import { NavController, LoadingController, ModalController, Platform, AlertController } from 'ionic-angular';
 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Toast } from '@ionic-native/toast';
 
-import { BarcodeProvider } from '../../providers/barcode/barcode';
+import { BarcodeProvider } from '../../providers/barcode';
+import { ProductProvider } from '../../providers/product';
 import { NamesListPage } from '../names-list/names-list';
 
 @Component({
@@ -23,9 +24,11 @@ export class HomePage {
     private barcodeScanner: BarcodeScanner, 
     private toast: Toast,
     public barcodeProvider: BarcodeProvider,
+    public productProvider: ProductProvider,
     private loadingCtrl: LoadingController,
     public modalCtrl: ModalController,
     private platform: Platform,
+    private alertCtrl: AlertController
   ) {
     
   }
@@ -53,12 +56,70 @@ export class HomePage {
 
     namesModal.present();
   }
+
+  presentConfirm(barcode: number) {
+    let alert = this.alertCtrl.create({
+      title: 'Product not found',
+      message: 'Do you want to search product in global database?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Search',
+          handler: () => {
+            this.searchGlobal(barcode);
+            console.log('Buy clicked');
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  searchProduct(barcode: number = 4602445000100) {
+    this.productFound = false;
+
+    this.loadingPresent('Please wait...');
+
+    this.productProvider.getProductByBarcode(barcode)
+      .subscribe( res => {
+        let data: any;
+        data = this.respondHandlerProduct(res);
+
+        if (data) {
+          this.productFound = true;
+          this.selectedProduct.name = data.name;
+          //this.presentNamesModal(names);
+          //this.selectedProduct.name = names[0];
+        }        
+        else{
+          this.presentConfirm(barcode);
+        }
+
+        this.loadingHide();
+      },(error) => {
+        if (this.platform.is('cordova')) {
+          this.toast.show(error, '3000', 'center').subscribe(
+            toast => {
+              console.log(toast);
+            }
+          );
+        }
+        this.loadingHide();
+      });
+
+  }
   
 
-  test(barcode: number = 4690228004018) {
+  searchGlobal(barcode: number = 4690228004018) {
     //let barcode: number = 4601808013092;
 
-    this.productFound = false;
+    
     this.loadingPresent('Please wait...');
     
     this.barcodeProvider.getNames(barcode)
@@ -102,7 +163,7 @@ export class HomePage {
     this.barcodeScanner.scan({resultDisplayDuration: 300}).then((barcodeData) => {
       this.selectedProduct = barcodeData;
       if (!barcodeData.cancelled){
-        this.test(+barcodeData.text);
+        this.searchProduct(+barcodeData.text);
       }      
     }, (err) => {
       this.toast.show(err, '3000', 'center').subscribe(
@@ -151,8 +212,14 @@ export class HomePage {
     if (data.status == 200) {
       return data.names;  
     }
-    return false;  
-          
-}
+    return false;          
+  }
+
+  protected respondHandlerProduct(data: any) {
+    if (data.success == true) {
+      return data.data;  
+    }
+    return false;          
+  }
 
 }

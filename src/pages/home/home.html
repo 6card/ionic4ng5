@@ -18,7 +18,9 @@
     update any existing page or create new pages.
   </p>
   <button ion-button full (click)="scan()">Scan</button>
-  <button ion-button full (click)="test()">Test</button>
+  <button ion-button full (click)="searchProduct()">Test</button>
+
+  <add-form></add-form>
 
   <ion-card *ngIf="productFound">
     <ion-card-header>

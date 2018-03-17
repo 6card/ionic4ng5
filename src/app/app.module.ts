@@ -16,10 +16,13 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Toast } from '@ionic-native/toast';
-import { BarcodeProvider } from '../providers/barcode/barcode';
+import { BarcodeProvider } from '../providers/barcode';
+import { ProductProvider } from '../providers/product';
 import { HttpClientModule } from '@angular/common/http';
 import { AppPreferences } from '@ionic-native/app-preferences';
 import { AppVersion } from '@ionic-native/app-version';
+
+import { AddForm } from "../components/add-form/add-form";
 
 @NgModule({
   declarations: [
@@ -30,7 +33,8 @@ import { AppVersion } from '@ionic-native/app-version';
     TabsPage,
     ShopslistPage,
     SettingsPage,
-    NamesListPage
+    NamesListPage,
+    AddForm
   ],
   imports: [
     BrowserModule,
@@ -55,6 +59,7 @@ import { AppVersion } from '@ionic-native/app-version';
     BarcodeScanner,
     Toast,
     BarcodeProvider,
+    ProductProvider,
     AppPreferences,
     AppVersion
   ]
