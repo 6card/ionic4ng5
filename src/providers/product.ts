@@ -23,4 +23,26 @@ export class ProductProvider {
     });
   }
 
+  addProduct(productName: string, productBarcode: number) {
+    const apiURL = `${this.apiRoot}`;
+
+    let headers = new HttpHeaders();    
+    headers.append('Content-Type', 'application/json');
+    headers.append('Accept', 'application/json');
+    
+    const httpOptions = { headers: headers };
+
+    let body =  JSON.stringify({
+      "Product": {
+        "barcode": productBarcode, 
+        "name": productName 
+      }
+    });
+
+    return this.http.post(apiURL, body, httpOptions )
+      .catch(res => {
+        return Observable.throw(res.message); // default
+      });
+  }
+
 }

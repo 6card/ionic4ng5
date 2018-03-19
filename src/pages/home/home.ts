@@ -14,7 +14,7 @@ import { NamesListPage } from '../names-list/names-list';
 })
 export class HomePage {
 
-  selectedProduct: any = { name: ''};
+  selectedProduct: any = { name: '', barcode: ''};
   productFound:boolean = false;
   loadingToast: any;
 
@@ -81,8 +81,26 @@ export class HomePage {
     alert.present();
   }
 
+  formUpdated(product) {
+    this.productProvider.addProduct(product[0], product[1])
+    .subscribe( res => {
+        let data: any;
+        data = this.respondHandlerProduct(res);
+        console.log(data)
+      },(error) => {
+        if (this.platform.is('cordova')) {
+          this.toast.show(error, '3000', 'center').subscribe(
+            toast => {
+              console.log(toast);
+            }
+          );
+        }
+      });
+  }
+
   searchProduct(barcode: number = 4602445000100) {
     this.productFound = false;
+    this.selectedProduct.barcode = barcode;
 
     this.loadingPresent('Please wait...');
 
@@ -94,6 +112,7 @@ export class HomePage {
         if (data) {
           this.productFound = true;
           this.selectedProduct.name = data.name;
+          
           //this.presentNamesModal(names);
           //this.selectedProduct.name = names[0];
         }        
