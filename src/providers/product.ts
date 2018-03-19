@@ -32,14 +32,13 @@ export class ProductProvider {
     
     const httpOptions = { headers: headers };
 
-    let body =  JSON.stringify({
-      "Product": {
-        "barcode": productBarcode, 
-        "name": productName 
-      }
-    });
+    let body =  {
+        user_id: 1,
+        barcode: productBarcode, 
+        name: productName
+    };
 
-    return this.http.post(apiURL, body, httpOptions )
+    return this.http.post(apiURL, body, httpOptions)
       .catch(res => {
         return Observable.throw(res.message); // default
       });

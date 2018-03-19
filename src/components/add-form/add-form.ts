@@ -9,8 +9,8 @@ export class AddForm {
 
     @Output() formResults: EventEmitter<any> = new EventEmitter();
 
-    /*@Input() */productName: string = 'ЖУРНАЛ "ЗЯТЕК"';
-    /*@Input() */productBarcode: number = 4602445000100;
+    @Input() productName: string;
+    @Input() productBarcode: number;
 
     public addProduct() {
         this.formResults.emit([this.productName, this.productBarcode]);

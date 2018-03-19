@@ -147,6 +147,7 @@ export class HomePage {
 
         names = this.respondHandler(res);
         if (names) {
+          console.log(names);
           this.productFound = true;
           this.presentNamesModal(names);
           //this.selectedProduct.name = names[0];
