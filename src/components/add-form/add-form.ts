@@ -11,6 +11,7 @@ export class AddForm {
 
     @Input() productName: string;
     @Input() productBarcode: number;
+    @Input() showForm: boolean;
 
     public addProduct() {
         this.formResults.emit([this.productName, this.productBarcode]);

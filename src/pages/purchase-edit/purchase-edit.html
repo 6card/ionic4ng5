@@ -1,0 +1,32 @@
+<ion-header>
+    <ion-navbar color="primary">
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title *ngIf="purchase">Purchase edit #{{ purchase.id }}</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+
+<ion-content padding>
+  <purchase-form *ngIf="purchase"
+  [purchase]="purchase"
+  (formResults)="updatePurchase($event)"
+  ></purchase-form>
+
+  <ion-list *ngIf="purchaseProducts">
+    <ion-item-sliding *ngFor="let pp of purchaseProducts">            
+      <button ion-item>      
+        {{ pp.product_name }}
+        <ion-badge item-end *ngIf="pp.price_without_discount">{{ pp.price_without_discount }}</ion-badge>
+        <ion-badge item-end color="secondary">{{ pp.price }}</ion-badge>
+      </button>
+      <ion-item-options>
+        <button ion-button color="danger" (click)="deletePurchaseProduct(pp)">Delete</button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <button ion-button full>Add product</button>
+
+</ion-content>

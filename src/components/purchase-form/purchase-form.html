@@ -1,0 +1,11 @@
+<form (ngSubmit)="pushPurchase()">
+    <ion-item *ngIf="purchase && purchase.id">
+      <ion-label>ID</ion-label>
+      <ion-input type="text" [(ngModel)]="purchase.id" disabled="true" name="ID"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Date</ion-label>
+      <ion-datetime displayFormat="DD.MM.YYYY" [(ngModel)]="purchase.date" name="date"></ion-datetime>
+    </ion-item>
+    <button ion-button type="submit" block>Save</button>
+</form>

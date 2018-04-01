@@ -98,7 +98,7 @@ export class HomePage {
       });
   }
 
-  searchProduct(barcode: number = 4602445000100) {
+  searchProduct(barcode: number = 4260107451519) {
     this.productFound = false;
     this.selectedProduct.barcode = barcode;
 
@@ -144,15 +144,13 @@ export class HomePage {
     this.barcodeProvider.getNames(barcode)
       .subscribe( res => {
         let names: Array<string>;
-
         names = this.respondHandler(res);
         if (names) {
           console.log(names);
           this.productFound = true;
           this.presentNamesModal(names);
           //this.selectedProduct.name = names[0];
-        }
-        
+        }        
         else{
           if (this.platform.is('cordova')) {
             this.toast.show(`Product not found`, '3000', 'center').subscribe(

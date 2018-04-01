@@ -8,20 +8,20 @@ import { ViewChild } from '@angular/core';
 import { Nav } from 'ionic-angular';
 
 import { SettingsPage } from '../pages/settings/settings';
+import { PurchasePage } from '../pages/purchase/purchase';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  @ViewChild(Nav) navCtrl: Nav;
+  @ViewChild(Nav) navCtrl: Nav;  
+  //rootPage:any = TabsPage;
+  rootPage:any = PurchasePage;
   
-  rootPage:any = TabsPage;
   pages: Array<{title: string, component: any, index: string, icon_name: string}>;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
     });

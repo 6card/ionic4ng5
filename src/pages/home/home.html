@@ -21,8 +21,9 @@
   <button ion-button full (click)="searchProduct()">Test</button>
 
   <add-form
-    [productName]="selectedProduct.name " 
-    [productBarcode]="selectedProduct.barcode "
+    [productName]="selectedProduct.name" 
+    [productBarcode]="selectedProduct.barcode"
+    [showForm]="productFound"
 
     (formResults)="formUpdated($event)"
   ></add-form>

@@ -1,17 +1,12 @@
-<ion-card>
-    <ion-card-header>
-      <h2>Product edit form</h2>
-    </ion-card-header>
 
-    <form (ngSubmit)="addProduct()">
+    <form (ngSubmit)="addProduct()"  *ngIf="showForm">
       <ion-item>
         <ion-label>Name</ion-label>
         <ion-input type="text" [(ngModel)]="productName" name="name"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>Barcode</ion-label>
-        <ion-textarea [(ngModel)]="productBarcode" name="barcode"></ion-textarea>
+        <ion-input [(ngModel)]="productBarcode" name="barcode"></ion-input>
       </ion-item>
-      <button ion-button type="submit" block>Add Todo</button>
+      <button ion-button type="submit" block>Add product</button>
     </form>
-</ion-card>

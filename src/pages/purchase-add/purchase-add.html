@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Purchase add</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <purchase-form
+  (formResults)="addPurchase($event)"
+  ></purchase-form>
+</ion-content>

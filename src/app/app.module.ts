@@ -8,6 +8,10 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 
+import { PurchasePage } from '../pages/purchase/purchase';
+import { PurchaseEditPage } from '../pages/purchase-edit/purchase-edit';
+import { PurchaseAddPage } from '../pages/purchase-add/purchase-add';
+
 import { ShopslistPage } from '../pages/shopslist/shopslist';
 import { SettingsPage } from '../pages/settings/settings';
 import { NamesListPage } from '../pages/names-list/names-list';
@@ -16,6 +20,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Toast } from '@ionic-native/toast';
+import { DatePicker } from '@ionic-native/date-picker';
+
 import { BarcodeProvider } from '../providers/barcode';
 import { ProductProvider } from '../providers/product';
 import { HttpClientModule } from '@angular/common/http';
@@ -23,6 +29,7 @@ import { AppPreferences } from '@ionic-native/app-preferences';
 import { AppVersion } from '@ionic-native/app-version';
 
 import { AddForm } from "../components/add-form/add-form";
+import { PurchaseForm } from "../components/purchase-form/purchase-form";
 
 @NgModule({
   declarations: [
@@ -34,12 +41,21 @@ import { AddForm } from "../components/add-form/add-form";
     ShopslistPage,
     SettingsPage,
     NamesListPage,
-    AddForm
+
+    AddForm,    
+
+    PurchasePage,
+    PurchaseEditPage,
+    PurchaseAddPage,
+    PurchaseForm,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp,{
+      //scrollPadding: false,
+      scrollAssist: false
+    }),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -50,7 +66,11 @@ import { AddForm } from "../components/add-form/add-form";
     TabsPage,
     ShopslistPage,
     SettingsPage,
-    NamesListPage
+    NamesListPage,
+    
+    PurchasePage,
+    PurchaseEditPage,
+    PurchaseAddPage
   ],
   providers: [
     StatusBar,
@@ -58,6 +78,7 @@ import { AddForm } from "../components/add-form/add-form";
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     BarcodeScanner,
     Toast,
+    DatePicker,
     BarcodeProvider,
     ProductProvider,
     AppPreferences,
