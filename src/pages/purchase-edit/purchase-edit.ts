@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController, ModalController } from 'ionic-angular';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
+import { BarcodeProvider } from '../../providers/barcode';
 import { ProductProvider } from '../../providers/product';
+import { NamesListPage } from '../names-list/names-list';
 
 @IonicPage()
 @Component({
@@ -14,14 +17,113 @@ export class PurchaseEditPage {
   loadingToast: any;
 
   purchaseProducts: any;
+  newProduct: any = { name: '', barcode: ''};
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     public productProvider: ProductProvider,
+    public barcodeProvider: BarcodeProvider,
     private loadingCtrl: LoadingController,
+    private barcodeScanner: BarcodeScanner,
+    private alertCtrl: AlertController,
+    public modalCtrl: ModalController,
   ) {
     
+  }
+
+  scan() {
+    this.barcodeScanner.scan({resultDisplayDuration: 300}).then((barcodeData) => {
+      this.newProduct = barcodeData;
+      if (!barcodeData.cancelled){
+        this.searchProduct(+barcodeData.text);
+      }      
+    }, (error) => {
+      console.error(error);
+    });
+  }
+
+  searchProduct(barcode: number = 4260107450481) {
+    this.newProduct.barcode = barcode;
+
+    this.loadingPresent('Please wait...');
+
+    this.productProvider.getProductByBarcode(barcode)
+      .subscribe( res => {
+        let data: any;
+        data = this.respondHandlerPurchase(res);
+        if (data) {
+          this.newProduct.name = data.name;
+        }        
+        else{
+          this.presentConfirm(barcode);
+        }
+
+        this.loadingHide();
+      },(error) => {
+        console.error(error);
+      });
+
+  }
+
+  presentConfirm(barcode: number) {
+    let alert = this.alertCtrl.create({
+      title: 'Product not found',
+      message: 'Do you want to search product in global database?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Search',
+          handler: () => {
+            this.searchGlobal(barcode);
+            console.log('Buy clicked');
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  searchGlobal(barcode: number = 4690228004018) {
+    //let barcode: number = 4601808013092;
+
+    
+    this.loadingPresent('Please wait...');
+    
+    this.barcodeProvider.getNames(barcode)
+      .subscribe( res => {
+        let names: Array<string>;
+        names = this.respondHandler(res);
+        if (names) {
+          //console.log(names);
+          this.presentNamesModal(names);
+          //this.selectedProduct.name = names[0];
+        }
+
+        this.loadingHide();
+      },(error) => {
+        console.error(error);
+        this.loadingHide();
+      });
+  }
+
+  presentNamesModal(names: Array<string>) {
+    let namesModal = this.modalCtrl.create(NamesListPage, { names: names });
+
+    namesModal.onDidDismiss(data => {
+      if (data) {
+        console.log(data);
+        this.newProduct.name = data;
+      }
+    });
+
+    namesModal.present();
   }
 
   loadingPresent(text: string) {
@@ -124,6 +226,13 @@ export class PurchaseEditPage {
   protected respondHandlerPurchase(data: any) {
     if (data.success == true) {
       return data.data;  
+    }
+    return false;          
+  }
+
+  protected respondHandler(data: any) {
+    if (data.status == 200) {
+      return data.names;  
     }
     return false;          
   }
