@@ -1,0 +1,23 @@
+
+    <form (ngSubmit)="addPurchaseProduct()">
+      <ion-item>
+        <ion-label>Barcode</ion-label>
+        <ion-input [(ngModel)]="product.barcode" name="barcode" disabled="true"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Name</ion-label>
+        <ion-input type="text" [(ngModel)]="product.name" name="name" disabled="true"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Price</ion-label>
+        <ion-input type="text" [(ngModel)]="product.price" name="price"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Price WD</ion-label>
+        <ion-input type="text" [(ngModel)]="product.price_without_discount" name="price_without_discount"></ion-input>
+      </ion-item>
+
+      <button ion-button type="submit" block>Add product</button>
+    </form>

@@ -44,6 +44,27 @@ export class ProductProvider {
       });
   }
 
+  addPurchaseProduct(purchase_id: number, product_id: number, product_price: any, product_price_without_discount: any) {
+    const apiURL = `${this.apiRoot}/purchase-product/products/${purchase_id}`;
+
+    let headers = new HttpHeaders();    
+    headers.append('Content-Type', 'application/json');
+    headers.append('Accept', 'application/json');
+    
+    const httpOptions = { headers: headers };
+
+    let body =  {
+        product_id: product_id,
+        price: product_price, 
+        price_without_discount: product_price_without_discount
+    };
+
+    return this.http.post(apiURL, body, httpOptions)
+      .catch(res => {
+        return Observable.throw(res.message); // default
+      });
+  }
+
   getPurchases(): Observable<any> {
     const apiURL = `${this.apiRoot}/purchase`;
 

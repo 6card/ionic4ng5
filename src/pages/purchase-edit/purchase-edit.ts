@@ -5,6 +5,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { BarcodeProvider } from '../../providers/barcode';
 import { ProductProvider } from '../../providers/product';
 import { NamesListPage } from '../names-list/names-list';
+import { ProductAddPage } from '../product-add/product-add';
+import { PurchaseProductAddPage } from '../purchase-product-add/purchase-product-add';
 
 @IonicPage()
 @Component({
@@ -17,7 +19,7 @@ export class PurchaseEditPage {
   loadingToast: any;
 
   purchaseProducts: any;
-  newProduct: any = { name: '', barcode: ''};
+  newProduct: any = { name: '', barcode: '', price: '', price_without_dicount: ''};
 
   constructor(
     public navCtrl: NavController, 
@@ -30,6 +32,11 @@ export class PurchaseEditPage {
     public modalCtrl: ModalController,
   ) {
     
+  }
+
+  AddProduct(newProduct) {
+    console.log('add');
+    this.navCtrl.push(ProductAddPage, {purchase_id: this.purchase.id, product: newProduct});
   }
 
   scan() {
@@ -53,7 +60,8 @@ export class PurchaseEditPage {
         let data: any;
         data = this.respondHandlerPurchase(res);
         if (data) {
-          this.newProduct.name = data.name;
+          //this.newProduct.name = data.name;
+          this.navCtrl.push(PurchaseProductAddPage, {purchase_id: this.purchase.id, product: data});
         }        
         else{
           this.presentConfirm(barcode);
@@ -118,8 +126,9 @@ export class PurchaseEditPage {
 
     namesModal.onDidDismiss(data => {
       if (data) {
-        console.log(data);
+        
         this.newProduct.name = data;
+        this.AddProduct(this.newProduct);
       }
     });
 

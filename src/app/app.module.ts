@@ -11,6 +11,9 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { PurchasePage } from '../pages/purchase/purchase';
 import { PurchaseEditPage } from '../pages/purchase-edit/purchase-edit';
 import { PurchaseAddPage } from '../pages/purchase-add/purchase-add';
+import { PurchaseProductAddPage } from '../pages/purchase-product-add/purchase-product-add';
+
+import { ProductAddPage } from '../pages/product-add/product-add';
 
 import { ShopslistPage } from '../pages/shopslist/shopslist';
 import { SettingsPage } from '../pages/settings/settings';
@@ -30,6 +33,7 @@ import { AppVersion } from '@ionic-native/app-version';
 
 import { AddForm } from "../components/add-form/add-form";
 import { PurchaseForm } from "../components/purchase-form/purchase-form";
+import { PurchaseProductForm } from "../components/purchase-product-form/purchase-product-form";
 
 @NgModule({
   declarations: [
@@ -48,6 +52,10 @@ import { PurchaseForm } from "../components/purchase-form/purchase-form";
     PurchaseEditPage,
     PurchaseAddPage,
     PurchaseForm,
+    PurchaseProductForm,
+    PurchaseProductAddPage,
+
+    ProductAddPage,
   ],
   imports: [
     BrowserModule,
@@ -70,7 +78,10 @@ import { PurchaseForm } from "../components/purchase-form/purchase-form";
     
     PurchasePage,
     PurchaseEditPage,
-    PurchaseAddPage
+    PurchaseAddPage,
+    PurchaseProductAddPage,
+
+    ProductAddPage,
   ],
   providers: [
     StatusBar,

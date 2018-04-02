@@ -1,12 +1,13 @@
 
-    <form (ngSubmit)="addProduct()"  *ngIf="showForm">
-      <ion-item>
-        <ion-label>Name</ion-label>
-        <ion-input type="text" [(ngModel)]="productName" name="name"></ion-input>
-      </ion-item>
+    <form (ngSubmit)="addProduct()">
       <ion-item>
         <ion-label>Barcode</ion-label>
-        <ion-input [(ngModel)]="productBarcode" name="barcode"></ion-input>
+        <ion-input [(ngModel)]="product.barcode" name="barcode" disabled="true"></ion-input>
       </ion-item>
+      <ion-item>
+        <ion-label>Name</ion-label>
+        <ion-input type="text" [(ngModel)]="product.name" name="name"></ion-input>
+      </ion-item>
+
       <button ion-button type="submit" block>Add product</button>
     </form>
