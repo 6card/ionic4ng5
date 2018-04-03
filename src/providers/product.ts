@@ -17,18 +17,18 @@ export class ProductProvider {
     //console.log('Hello BarcodeProvider Provider');
   }
 
-  getProductByBarcode(barcode: number): Observable<Product> {
+  getProductByBarcode(barcode: number): Observable<Product | any> {
     const apiURL = `${this.apiRoot}/product/barcode2/${barcode}`;
 
-    return this.http.get<Product>(apiURL)
+    return this.http.get<Product | any>(apiURL)
       .pipe(
         tap(_ => this.log(`get product barcode=${barcode}`)),
-        /*
-        catchError((err, caught) => {
-          this.handleError<Product>('getProductByBarcode');
-          return Observable.throw(err.message);
-        })
-        */
+        map( (res) => {
+          if (res.success == true)
+            return res.data;
+          else
+            return res.message;
+        }),
         catchError(this.handleError<Product>('getProductByBarcode'))
       );
   }
@@ -156,7 +156,7 @@ export class ProductProvider {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
+      //console.error(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);

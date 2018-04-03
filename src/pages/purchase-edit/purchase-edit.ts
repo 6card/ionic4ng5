@@ -61,7 +61,9 @@ export class PurchaseEditPage {
     this.productProvider.getProductByBarcode(barcode)
       .finally(() => this.loadingHide())
       .subscribe( res => {
-        let data: any;        
+        let data: any;
+        console.log(res);  
+        /*   
         data = this.respondHandlerPurchase(res);
         if (data.status == 404) {
           //this.newProduct.name = data.name;
@@ -70,6 +72,7 @@ export class PurchaseEditPage {
         else if (data) {
           this.navCtrl.push(PurchaseProductAddPage, {purchase_id: this.purchase.id, product: data});
         }
+        */
       },(error) => {
         console.log(error);
       });
