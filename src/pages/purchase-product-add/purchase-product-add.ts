@@ -34,7 +34,7 @@ export class PurchaseProductAddPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PurchaseProductAddPage');
+    //console.log('ionViewDidLoad PurchaseProductAddPage');
   }
 
   protected respondHandlerProduct(data: any) {

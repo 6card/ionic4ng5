@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController, ModalController } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
@@ -7,6 +8,8 @@ import { ProductProvider } from '../../providers/product';
 import { NamesListPage } from '../names-list/names-list';
 import { ProductAddPage } from '../product-add/product-add';
 import { PurchaseProductAddPage } from '../purchase-product-add/purchase-product-add';
+
+import 'rxjs/add/operator/finally';
 
 @IonicPage()
 @Component({
@@ -56,20 +59,19 @@ export class PurchaseEditPage {
     this.loadingPresent('Please wait...');
 
     this.productProvider.getProductByBarcode(barcode)
+      .finally(() => this.loadingHide())
       .subscribe( res => {
-        let data: any;
+        let data: any;        
         data = this.respondHandlerPurchase(res);
-        if (data) {
+        if (data.status == 404) {
           //this.newProduct.name = data.name;
-          this.navCtrl.push(PurchaseProductAddPage, {purchase_id: this.purchase.id, product: data});
+          this.presentConfirm(barcode);          
         }        
-        else{
-          this.presentConfirm(barcode);
+        else if (data) {
+          this.navCtrl.push(PurchaseProductAddPage, {purchase_id: this.purchase.id, product: data});
         }
-
-        this.loadingHide();
       },(error) => {
-        console.error(error);
+        console.log(error);
       });
 
   }
@@ -233,7 +235,7 @@ export class PurchaseEditPage {
   }
 
   protected respondHandlerPurchase(data: any) {
-    if (data.success == true) {
+    if (data && (data.success == true || data.data.status == 404)) {
       return data.data;  
     }
     return false;          

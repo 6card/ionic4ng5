@@ -17,7 +17,7 @@ export class BarcodeProvider {
   apiRoot = 'https://barcodes.olegon.ru/api/card/name';
 
   constructor(public http: HttpClient) {
-    console.log('Hello BarcodeProvider Provider');
+    //console.log('Hello BarcodeProvider Provider');
   }
 
   getNames(barcode: any): Observable<any> {
