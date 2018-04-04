@@ -9,6 +9,10 @@ import { NamesListPage } from '../names-list/names-list';
 import { ProductAddPage } from '../product-add/product-add';
 import { PurchaseProductAddPage } from '../purchase-product-add/purchase-product-add';
 
+import { Product } from '../../shared/product';
+import { Purchase } from '../../shared/purchase';
+import { Response, ResponseError } from '../../shared/response';
+
 import 'rxjs/add/operator/finally';
 
 @IonicPage()
@@ -61,20 +65,14 @@ export class PurchaseEditPage {
     this.productProvider.getProductByBarcode(barcode)
       .finally(() => this.loadingHide())
       .subscribe( res => {
-        let data: any;
-        console.log(res);  
-        /*   
+        let data: Product | ResponseError;
         data = this.respondHandlerPurchase(res);
-        if (data.status == 404) {
-          //this.newProduct.name = data.name;
-          this.presentConfirm(barcode);          
-        }        
-        else if (data) {
+        if (data) {
           this.navCtrl.push(PurchaseProductAddPage, {purchase_id: this.purchase.id, product: data});
         }
-        */
-      },(error) => {
-        console.log(error);
+        else {
+          this.presentConfirm(barcode); 
+        }
       });
 
   }
@@ -238,10 +236,10 @@ export class PurchaseEditPage {
   }
 
   protected respondHandlerPurchase(data: any) {
-    if (data && (data.success == true || data.data.status == 404)) {
-      return data.data;  
+    if (data && data instanceof ResponseError) {
+      return null;  
     }
-    return false;          
+    return data;      
   }
 
   protected respondHandler(data: any) {

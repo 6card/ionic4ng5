@@ -6,6 +6,8 @@ import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Product } from '../shared/product';
+import { Purchase } from '../shared/purchase';
+import { Response, ResponseError } from '../shared/response';
 import { PurchaseProduct } from '../shared/purchase-product';
 
 @Injectable()
@@ -17,10 +19,10 @@ export class ProductProvider {
     //console.log('Hello BarcodeProvider Provider');
   }
 
-  getProductByBarcode(barcode: number): Observable<Product | any> {
-    const apiURL = `${this.apiRoot}/product/barcode2/${barcode}`;
+  getProductByBarcode(barcode: number): Observable<Product | ResponseError> {
+    const apiURL = `${this.apiRoot}/product/barcode/${barcode}`;
 
-    return this.http.get<Product | any>(apiURL)
+    return this.http.get<Response>(apiURL)
       .pipe(
         tap(_ => this.log(`get product barcode=${barcode}`)),
         map( (res) => {
@@ -29,7 +31,7 @@ export class ProductProvider {
           else
             return res.message;
         }),
-        catchError(this.handleError<Product>('getProductByBarcode'))
+        catchError(this.handleError<ResponseError>('getProductByBarcode'))
       );
   }
 
@@ -84,13 +86,20 @@ export class ProductProvider {
     });
   }
 
-  getPurchase(id: number): Observable<any> {
+  getPurchase(id: number): Observable<Purchase | ResponseError> {
     const apiURL = `${this.apiRoot}/purchase/${id}`;
 
-    return this.http.get(apiURL/*, httpOptions*/)
-    .catch(res => {
-        return Observable.throw(res.message); // default
-    });
+    return this.http.get<Response>(apiURL)
+    .pipe(
+      tap(_ => this.log(`get purchse id=${id}`)),
+      map( (res) => {
+        if (res.success == true)
+          return res.data;
+        else
+          return res.message;
+      }),
+      catchError(this.handleError<ResponseError>('getPurchase'))
+    );
   }
 
   putPurchase(purchase: any): Observable<any> {
@@ -133,13 +142,20 @@ export class ProductProvider {
     });
   }
 
-  getPurchaseProducts(id: number): Observable<any> {
+  getPurchaseProducts(id: number): Observable<PurchaseProduct | ResponseError> {
     const apiURL = `${this.apiRoot}/purchase-product/products/${id}`;
 
-    return this.http.get(apiURL/*, httpOptions*/)
-    .catch(res => {
-        return Observable.throw(res.message); // default
-    });
+    return this.http.get<Response>(apiURL)
+    .pipe(
+      tap(_ => this.log(`get purchse-products id=${id}`)),
+      map( (res) => {
+        if (res.success == true)
+          return res.data;
+        else
+          return res.message;
+      }),
+      catchError(this.handleError<ResponseError>('getPurchaseProducts'))
+    );
   }
 
   deletePurchaseProduct(id: any): Observable<any> {
